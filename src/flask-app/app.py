@@ -94,18 +94,20 @@ def gemini():
         user_fat = request.json.get("fat")
         user_carbs = request.json.get("carbs")
 
+        number_of_meals = int(request.json.get("mealNumber"))
+
         for _ in range(req_number):
             for m in result:
                 ingredients = result[m]
 
-                temp_user_prompt = f"Here's my food list for specifically the {m} meal, do not create plans for any other meals besides the one specified: {ingredients} \n Please create a list of foods and quantities as specified by the JSON format with these nutritional targets: \n - Calories: {float(user_calories) / len(result)} "
+                temp_user_prompt = f"Here's my food list for specifically the {m} meal, do not create plans for any other meals besides the one specified: {ingredients} \n Please create a list of foods and quantities as specified by the JSON format with these nutritional targets: \n - Calories: {float(user_calories) / number_of_meals} "
 
                 if (user_protein):
-                    temp_user_prompt += f"\n - Protein: {float(user_protein) / len(result)} "
+                    temp_user_prompt += f"\n - Protein: {float(user_protein) / number_of_meals} "
                 if (user_carbs):
-                    temp_user_prompt += f"\n - Carbs: {float(user_carbs) / len(result)} "
+                    temp_user_prompt += f"\n - Carbs: {float(user_carbs) / number_of_meals} "
                 if (user_fat):
-                    temp_user_prompt += f"\n - Fat: {float(user_fat) / len(result)} "
+                    temp_user_prompt += f"\n - Fat: {float(user_fat) / number_of_meals} "
                 
                 user_prompts.append(temp_user_prompt)
 
